@@ -5,60 +5,68 @@
 
 void bsp::GpioPinOptions::InitAsGpioMode(GPIO_InitTypeDef &o) const
 {
+    auto init_as_input_mode = [&]()
+    {
+        switch (TriggerEdge())
+        {
+        case bsp::IGpioPinTriggerEdge::Disable:
+            {
+                o.Mode = GPIO_MODE_INPUT;
+                break;
+            }
+        case bsp::IGpioPinTriggerEdge::RisingEdge:
+            {
+                o.Mode = GPIO_MODE_IT_RISING;
+                break;
+            }
+        case bsp::IGpioPinTriggerEdge::FallingEdge:
+            {
+                o.Mode = GPIO_MODE_IT_FALLING;
+                break;
+            }
+        case bsp::IGpioPinTriggerEdge::BothEdge:
+            {
+                o.Mode = GPIO_MODE_IT_RISING_FALLING;
+                break;
+            }
+        default:
+            {
+                throw std::invalid_argument{"不支持的值"};
+            }
+        }
+    };
+
+    auto init_as_output_mode = [&]()
+    {
+        switch (Driver())
+        {
+        case bsp::IGpioPinDriver::PushPull:
+            {
+                o.Mode = GPIO_MODE_OUTPUT_PP;
+                break;
+            }
+        case bsp::IGpioPinDriver::OpenDrain:
+            {
+                o.Mode = GPIO_MODE_OUTPUT_OD;
+                break;
+            }
+        default:
+            {
+                throw std::invalid_argument{"不支持的值"};
+            }
+        }
+    };
+
     switch (Direction())
     {
     case bsp::IGpioPinDirection::Input:
         {
-            switch (TriggerEdge())
-            {
-            case bsp::IGpioPinTriggerEdge::Disable:
-                {
-                    o.Mode = GPIO_MODE_INPUT;
-                    break;
-                }
-            case bsp::IGpioPinTriggerEdge::RisingEdge:
-                {
-                    o.Mode = GPIO_MODE_IT_RISING;
-                    break;
-                }
-            case bsp::IGpioPinTriggerEdge::FallingEdge:
-                {
-                    o.Mode = GPIO_MODE_IT_FALLING;
-                    break;
-                }
-            case bsp::IGpioPinTriggerEdge::BothEdge:
-                {
-                    o.Mode = GPIO_MODE_IT_RISING_FALLING;
-                    break;
-                }
-            default:
-                {
-                    throw std::invalid_argument{"不支持的值"};
-                }
-            }
-
+            init_as_input_mode();
             break;
         }
     case bsp::IGpioPinDirection::Output:
         {
-            switch (Driver())
-            {
-            case bsp::IGpioPinDriver::PushPull:
-                {
-                    o.Mode = GPIO_MODE_OUTPUT_PP;
-                    break;
-                }
-            case bsp::IGpioPinDriver::OpenDrain:
-                {
-                    o.Mode = GPIO_MODE_OUTPUT_OD;
-                    break;
-                }
-            default:
-                {
-                    throw std::invalid_argument{"不支持的值"};
-                }
-            }
-
+            init_as_output_mode();
             break;
         }
     default:
@@ -70,33 +78,16 @@ void bsp::GpioPinOptions::InitAsGpioMode(GPIO_InitTypeDef &o) const
 
 void bsp::GpioPinOptions::InitAsAlternateFunctionMode(GPIO_InitTypeDef &o) const
 {
-    switch (Direction())
+    switch (Driver())
     {
-    case bsp::IGpioPinDirection::Input:
+    case bsp::IGpioPinDriver::PushPull:
         {
-            o.Mode = GPIO_MODE_INPUT;
+            o.Mode = GPIO_MODE_AF_PP;
             break;
         }
-    case bsp::IGpioPinDirection::Output:
+    case bsp::IGpioPinDriver::OpenDrain:
         {
-            switch (Driver())
-            {
-            case bsp::IGpioPinDriver::PushPull:
-                {
-                    o.Mode = GPIO_MODE_AF_PP;
-                    break;
-                }
-            case bsp::IGpioPinDriver::OpenDrain:
-                {
-                    o.Mode = GPIO_MODE_AF_OD;
-                    break;
-                }
-            default:
-                {
-                    throw std::invalid_argument{"不支持的值"};
-                }
-            }
-
+            o.Mode = GPIO_MODE_AF_OD;
             break;
         }
     default:
@@ -270,10 +261,14 @@ int bsp::GpioPinOptions::SpeedLevel() const
         {
             return 1;
         }
-    default:
     case GPIO_SPEED_FREQ_HIGH:
         {
             return 2;
+        }
+    default:
+    case GPIO_SPEED_FREQ_VERY_HIGH:
+        {
+            return 3;
         }
     }
 }
@@ -292,10 +287,15 @@ void bsp::GpioPinOptions::SetSpeedLevel(int value)
             _hal_gpio_init.Speed = GPIO_SPEED_FREQ_MEDIUM;
             break;
         }
-    default:
     case 2:
         {
             _hal_gpio_init.Speed = GPIO_SPEED_FREQ_HIGH;
+            break;
+        }
+    default:
+    case 3:
+        {
+            _hal_gpio_init.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
             break;
         }
     }

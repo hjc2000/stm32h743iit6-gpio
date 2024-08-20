@@ -2,6 +2,23 @@
 #include <GpioPinOptions.h>
 #include <hal.h>
 
+void bsp::GpioPinPB1::Init(bsp::GpioPinOptions const &options)
+{
+    GPIO_InitTypeDef init = options;
+
+    if (options.AlternateFunction() == "timer3")
+    {
+        init.Alternate = GPIO_AF2_TIM3;
+    }
+    else
+    {
+        throw std::invalid_argument{"不支持的复用模式"};
+    }
+
+    init.Pin = Pin();
+    HAL_GPIO_Init(Port(), &init);
+}
+
 GPIO_TypeDef *bsp::GpioPinPB1::Port()
 {
     return GPIOB;
@@ -27,9 +44,7 @@ void bsp::GpioPinPB1::Open(bsp::IGpioPinOptions const &options)
     _is_open = true;
 
     __HAL_RCC_GPIOB_CLK_ENABLE();
-    GPIO_InitTypeDef init = static_cast<bsp::GpioPinOptions const &>(options);
-    init.Pin = Pin();
-    HAL_GPIO_Init(Port(), &init);
+    Init(static_cast<bsp::GpioPinOptions const &>(options));
 }
 
 void bsp::GpioPinPB1::Close()

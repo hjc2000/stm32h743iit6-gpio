@@ -20,6 +20,8 @@ namespace bsp
                 base::RentedPtrFactory::Create(&_supported_alternate_functions),
             };
 
+        void Init(bsp::GpioPinOptions const &options);
+
     public:
         static GpioPinPB1 &Instance()
         {
