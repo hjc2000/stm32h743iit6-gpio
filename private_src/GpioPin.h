@@ -4,7 +4,8 @@
 
 namespace bsp
 {
-    class GpioPin : public bsp::IGpioPin
+    class GpioPin :
+        public bsp::IGpioPin
     {
     public:
         virtual ~GpioPin() = default;

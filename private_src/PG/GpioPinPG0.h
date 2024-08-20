@@ -6,7 +6,8 @@
 
 namespace bsp
 {
-    class GpioPinPG0 final : public bsp::GpioPin
+    class GpioPinPG0 final :
+        public bsp::GpioPin
     {
     private:
         GpioPinPG0() = default;

@@ -6,26 +6,24 @@
 
 namespace bsp
 {
-    class GpioPinPD11 final :
+    class GpioPinPB1 final :
         public bsp::GpioPin
     {
     private:
-        GpioPinPD11() = default;
+        GpioPinPB1() = default;
 
         bool _is_open = false;
 
-        std::array<std::string, 1> _supported_alternate_functions{
-            "af_push_pull",
-        };
+        std::array<std::string, 1> _supported_alternate_functions{"gpio"};
         base::StdContainerEnumerable<std::string, std::array<std::string, 1>>
             _supported_alternate_functions_enumerable{
                 base::RentedPtrFactory::Create(&_supported_alternate_functions),
             };
 
     public:
-        static GpioPinPD11 &Instance()
+        static GpioPinPB1 &Instance()
         {
-            static GpioPinPD11 o;
+            static GpioPinPB1 o;
             return o;
         }
 

@@ -4,7 +4,8 @@
 
 namespace bsp
 {
-    class GpioPinOptions final : public bsp::IGpioPinOptions
+    class GpioPinOptions final :
+        public bsp::IGpioPinOptions
     {
     private:
         GPIO_InitTypeDef _hal_gpio_init;
