@@ -3,6 +3,8 @@
 #include <base/container/StdContainerEnumerable.h>
 #include <base/RentedPtrFactory.h>
 #include <GpioPin.h>
+#include <GpioPinOptions.h>
+#include <hal.h>
 
 namespace bsp
 {
@@ -14,11 +16,11 @@ namespace bsp
 
         bool _is_open = false;
 
-        std::array<std::string, 1> _supported_alternate_functions{"gpio"};
-        base::StdContainerEnumerable<std::string, std::array<std::string, 1>>
-            _supported_alternate_functions_enumerable{
-                base::RentedPtrFactory::Create(&_supported_alternate_functions),
-            };
+        std::array<std::string, 1> _supported_alternate_functions{"timer3"};
+
+        base::StdContainerEnumerable<std::string, std::array<std::string, 1>> _supported_alternate_functions_enumerable{
+            base::RentedPtrFactory::Create(&_supported_alternate_functions),
+        };
 
         void Init(bsp::GpioPinOptions const &options);
 

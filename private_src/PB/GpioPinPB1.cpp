@@ -1,6 +1,4 @@
 #include "GpioPinPB1.h"
-#include <GpioPinOptions.h>
-#include <hal.h>
 
 void bsp::GpioPinPB1::Init(bsp::GpioPinOptions const &options)
 {
