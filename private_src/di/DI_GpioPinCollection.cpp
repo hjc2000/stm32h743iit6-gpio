@@ -128,7 +128,7 @@ public:
         auto it = _pin_map.find(key);
         if (it == _pin_map.end())
         {
-            return nullptr;
+            throw std::runtime_error{"找不到该 gpio"};
         }
 
         return it->second;
