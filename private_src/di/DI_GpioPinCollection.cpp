@@ -1,6 +1,5 @@
 #include <base/container/StdMapValuesEnumerable.h>
 #include <base/Initializer.h>
-#include <bsp-interface/di.h>
 #include <GpioPinOptions.h>
 
 #pragma region PA
