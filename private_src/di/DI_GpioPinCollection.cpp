@@ -70,6 +70,7 @@ public:
 
 #pragma region PB
         AddPin(bsp::GpioPinPB0::Instance());
+        AddPin(bsp::GpioPinPB1::Instance());
         AddPin(bsp::GpioPinPB5::Instance());
 #pragma endregion
 
