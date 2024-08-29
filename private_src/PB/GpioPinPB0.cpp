@@ -1,6 +1,4 @@
 #include "GpioPinPB0.h"
-#include <GpioPinOptions.h>
-#include <hal.h>
 
 GPIO_TypeDef *bsp::GpioPinPB0::Port()
 {

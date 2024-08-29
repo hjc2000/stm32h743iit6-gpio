@@ -3,6 +3,8 @@
 #include <base/container/StdContainerEnumerable.h>
 #include <base/RentedPtrFactory.h>
 #include <GpioPin.h>
+#include <GpioPinOptions.h>
+#include <hal.h>
 
 namespace bsp
 {
