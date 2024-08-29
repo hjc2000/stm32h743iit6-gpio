@@ -51,6 +51,11 @@
 #include <PG/GpioPinPG12.h>
 #pragma endregion
 
+#pragma region PH
+#include <PH/GpioPinPH2.h>
+#include <PH/GpioPinPH3.h>
+#pragma endregion
+
 static base::Initializer _initializer{
     []()
     {
@@ -105,6 +110,11 @@ public:
 #pragma region PG
         AddPin(bsp::GpioPinPG0::Instance());
         AddPin(bsp::GpioPinPG12::Instance());
+#pragma endregion
+
+#pragma region PH
+        AddPin(bsp::GpioPinPH2::Instance());
+        AddPin(bsp::GpioPinPH3::Instance());
 #pragma endregion
     }
 
