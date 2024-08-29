@@ -38,7 +38,7 @@ void bsp::GpioPinPB1::Open(bsp::IGpioPinOptions const &options)
 {
     if (_is_open)
     {
-        return;
+        throw std::runtime_error{"已经打开，要先关闭"};
     }
 
     _is_open = true;

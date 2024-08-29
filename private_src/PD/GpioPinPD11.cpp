@@ -4,40 +4,40 @@
 
 GPIO_TypeDef *bsp::GpioPinPD11::Port()
 {
-	return GPIOD;
+    return GPIOD;
 }
 
 uint32_t bsp::GpioPinPD11::Pin()
 {
-	return GPIO_PIN_11;
+    return GPIO_PIN_11;
 }
 
 std::string bsp::GpioPinPD11::PinName() const
 {
-	return "PD11";
+    return "PD11";
 }
 
 void bsp::GpioPinPD11::Open(bsp::IGpioPinOptions const &options)
 {
-	if (_is_open)
-	{
-		return;
-	}
+    if (_is_open)
+    {
+        throw std::runtime_error{"已经打开，要先关闭"};
+    }
 
-	_is_open = true;
+    _is_open = true;
 
-	__HAL_RCC_GPIOD_CLK_ENABLE();
-	GPIO_InitTypeDef init = static_cast<bsp::GpioPinOptions const &>(options);
-	init.Pin = Pin();
-	HAL_GPIO_Init(Port(), &init);
+    __HAL_RCC_GPIOD_CLK_ENABLE();
+    GPIO_InitTypeDef init = static_cast<bsp::GpioPinOptions const &>(options);
+    init.Pin = Pin();
+    HAL_GPIO_Init(Port(), &init);
 }
 
 void bsp::GpioPinPD11::Close()
 {
-	if (!_is_open)
-	{
-		return;
-	}
+    if (!_is_open)
+    {
+        return;
+    }
 
-	_is_open = false;
+    _is_open = false;
 }
