@@ -3,17 +3,19 @@
 void bsp::GpioPinPA10::Init(bsp::GpioPinOptions const &options)
 {
     GPIO_InitTypeDef init = options;
+    if (options.WorkMode() == bsp::IGpioPinWorkMode::AlternateFunction)
+    {
+        if (options.AlternateFunction() == "usart1")
+        {
+            init.Alternate = GPIO_AF7_USART1;
+        }
+        else
+        {
+            throw std::invalid_argument{"不支持的复用模式"};
+        }
+    }
+
     init.Pin = Pin();
-
-    if (options.AlternateFunction() == "usart1")
-    {
-        init.Alternate = GPIO_AF7_USART1;
-    }
-    else
-    {
-        throw std::invalid_argument{"不支持的复用模式"};
-    }
-
     HAL_GPIO_Init(Port(), &init);
 }
 

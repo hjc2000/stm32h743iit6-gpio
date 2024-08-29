@@ -3,14 +3,16 @@
 void bsp::GpioPinPB1::Init(bsp::GpioPinOptions const &options)
 {
     GPIO_InitTypeDef init = options;
-
-    if (options.AlternateFunction() == "timer3")
+    if (options.WorkMode() == bsp::IGpioPinWorkMode::AlternateFunction)
     {
-        init.Alternate = GPIO_AF2_TIM3;
-    }
-    else
-    {
-        throw std::invalid_argument{"不支持的复用模式"};
+        if (options.AlternateFunction() == "timer3")
+        {
+            init.Alternate = GPIO_AF2_TIM3;
+        }
+        else
+        {
+            throw std::invalid_argument{"不支持的复用模式"};
+        }
     }
 
     init.Pin = Pin();
