@@ -1,5 +1,6 @@
 #include <base/container/Collection.h>
-#include <base/Initializer.h>
+#include <base/SingletonGetter.h>
+#include <bsp-interface/di/interrupt.h>
 #include <GpioPinOptions.h>
 
 #pragma region PA
@@ -56,78 +57,97 @@
 #include <PH/GpioPinPH3.h>
 #pragma endregion
 
-static base::Initializer _initializer{
-    []()
-    {
-        DI_GpioPinCollection();
-    }};
-
-class Collection
+base::ICollection<std::string, bsp::IGpioPin *> const &DI_GpioPinCollection()
 {
-public:
-    Collection()
+    class Initializer
     {
+    private:
+        Initializer()
+        {
 #pragma region PA
-        AddPin(bsp::GpioPinPA0::Instance());
-        AddPin(bsp::GpioPinPA9::Instance());
-        AddPin(bsp::GpioPinPA10::Instance());
+            AddPin(bsp::GpioPinPA0::Instance());
+            AddPin(bsp::GpioPinPA9::Instance());
+            AddPin(bsp::GpioPinPA10::Instance());
 #pragma endregion
 
 #pragma region PB
-        AddPin(bsp::GpioPinPB0::Instance());
-        AddPin(bsp::GpioPinPB1::Instance());
-        AddPin(bsp::GpioPinPB5::Instance());
+            AddPin(bsp::GpioPinPB0::Instance());
+            AddPin(bsp::GpioPinPB1::Instance());
+            AddPin(bsp::GpioPinPB5::Instance());
 #pragma endregion
 
 #pragma region PD
-        AddPin(bsp::GpioPinPD0::Instance());
-        AddPin(bsp::GpioPinPD1::Instance());
-        AddPin(bsp::GpioPinPD4::Instance());
-        AddPin(bsp::GpioPinPD5::Instance());
-        AddPin(bsp::GpioPinPD8::Instance());
-        AddPin(bsp::GpioPinPD9::Instance());
-        AddPin(bsp::GpioPinPD10::Instance());
-        AddPin(bsp::GpioPinPD11::Instance());
-        AddPin(bsp::GpioPinPD14::Instance());
-        AddPin(bsp::GpioPinPD15::Instance());
+            AddPin(bsp::GpioPinPD0::Instance());
+            AddPin(bsp::GpioPinPD1::Instance());
+            AddPin(bsp::GpioPinPD4::Instance());
+            AddPin(bsp::GpioPinPD5::Instance());
+            AddPin(bsp::GpioPinPD8::Instance());
+            AddPin(bsp::GpioPinPD9::Instance());
+            AddPin(bsp::GpioPinPD10::Instance());
+            AddPin(bsp::GpioPinPD11::Instance());
+            AddPin(bsp::GpioPinPD14::Instance());
+            AddPin(bsp::GpioPinPD15::Instance());
 #pragma endregion
 
 #pragma region PE
-        AddPin(bsp::GpioPinPE3::Instance());
-        AddPin(bsp::GpioPinPE4::Instance());
-        AddPin(bsp::GpioPinPE5::Instance());
-        AddPin(bsp::GpioPinPE7::Instance());
-        AddPin(bsp::GpioPinPE8::Instance());
-        AddPin(bsp::GpioPinPE9::Instance());
-        AddPin(bsp::GpioPinPE10::Instance());
-        AddPin(bsp::GpioPinPE11::Instance());
-        AddPin(bsp::GpioPinPE12::Instance());
-        AddPin(bsp::GpioPinPE13::Instance());
-        AddPin(bsp::GpioPinPE14::Instance());
-        AddPin(bsp::GpioPinPE15::Instance());
+            AddPin(bsp::GpioPinPE3::Instance());
+            AddPin(bsp::GpioPinPE4::Instance());
+            AddPin(bsp::GpioPinPE5::Instance());
+            AddPin(bsp::GpioPinPE7::Instance());
+            AddPin(bsp::GpioPinPE8::Instance());
+            AddPin(bsp::GpioPinPE9::Instance());
+            AddPin(bsp::GpioPinPE10::Instance());
+            AddPin(bsp::GpioPinPE11::Instance());
+            AddPin(bsp::GpioPinPE12::Instance());
+            AddPin(bsp::GpioPinPE13::Instance());
+            AddPin(bsp::GpioPinPE14::Instance());
+            AddPin(bsp::GpioPinPE15::Instance());
 #pragma endregion
 
 #pragma region PG
-        AddPin(bsp::GpioPinPG0::Instance());
-        AddPin(bsp::GpioPinPG12::Instance());
+            AddPin(bsp::GpioPinPG0::Instance());
+            AddPin(bsp::GpioPinPG12::Instance());
 #pragma endregion
 
 #pragma region PH
-        AddPin(bsp::GpioPinPH2::Instance());
-        AddPin(bsp::GpioPinPH3::Instance());
+            AddPin(bsp::GpioPinPH2::Instance());
+            AddPin(bsp::GpioPinPH3::Instance());
 #pragma endregion
-    }
+        }
 
-    base::Collection<std::string, bsp::IGpioPin *> _collection{};
+        void AddPin(bsp::IGpioPin &pin)
+        {
+            _collection.Put(pin.PinName(), &pin);
+        }
 
-    void AddPin(bsp::IGpioPin &pin)
-    {
-        _collection.Put(pin.PinName(), &pin);
-    }
-};
+    public:
+        base::Collection<std::string, bsp::IGpioPin *> _collection{};
 
-base::ICollection<std::string, bsp::IGpioPin *> const &DI_GpioPinCollection()
-{
-    static Collection o;
-    return o._collection;
+        static Initializer &Instance()
+        {
+            class Getter : public base::SingletonGetter<Initializer>
+            {
+            public:
+                std::unique_ptr<Initializer> Create() override
+                {
+                    return std::unique_ptr<Initializer>{new Initializer{}};
+                }
+
+                void Lock() override
+                {
+                    DI_InterruptSwitch().DisableGlobalInterrupt();
+                }
+
+                void Unlock() override
+                {
+                    DI_InterruptSwitch().EnableGlobalInterrupt();
+                }
+            };
+
+            Getter g;
+            return g.Instance();
+        }
+    };
+
+    return Initializer::Instance()._collection;
 }
