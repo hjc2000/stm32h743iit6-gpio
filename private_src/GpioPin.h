@@ -1,10 +1,9 @@
 #pragma once
+#include <base/define.h>
 #include <base/di/SingletonGetter.h>
 #include <bsp-interface/di/gpio.h>
 #include <bsp-interface/di/interrupt.h>
 #include <hal.h>
-
-#define static_function static
 
 namespace bsp
 {
