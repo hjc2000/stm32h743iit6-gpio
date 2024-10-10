@@ -57,11 +57,17 @@
 #include <PH/GpioPinPH3.h>
 #pragma endregion
 
-base::IDictionary<std::string, bsp::IGpioPin *> const &DI_GpioPinCollection()
+namespace
 {
     class Initializer
     {
     private:
+        void AddPin(bsp::IGpioPin &pin)
+        {
+            _dic.Add(pin.PinName(), &pin);
+        }
+
+    public:
         Initializer()
         {
 #pragma region PA
@@ -115,39 +121,32 @@ base::IDictionary<std::string, bsp::IGpioPin *> const &DI_GpioPinCollection()
 #pragma endregion
         }
 
-        void AddPin(bsp::IGpioPin &pin)
-        {
-            _dic.Add(pin.PinName(), &pin);
-        }
-
-    public:
         base::Dictionary<std::string, bsp::IGpioPin *> _dic{};
-
-        static Initializer &Instance()
-        {
-            class Getter : public base::SingletonGetter<Initializer>
-            {
-            public:
-                std::unique_ptr<Initializer> Create() override
-                {
-                    return std::unique_ptr<Initializer>{new Initializer{}};
-                }
-
-                void Lock() override
-                {
-                    DI_InterruptSwitch().DisableGlobalInterrupt();
-                }
-
-                void Unlock() override
-                {
-                    DI_InterruptSwitch().EnableGlobalInterrupt();
-                }
-            };
-
-            Getter g;
-            return g.Instance();
-        }
     };
 
-    return Initializer::Instance()._dic;
+    class Getter :
+        public base::SingletonGetter<Initializer>
+    {
+    public:
+        std::unique_ptr<Initializer> Create() override
+        {
+            return std::unique_ptr<Initializer>{new Initializer{}};
+        }
+
+        void Lock() override
+        {
+            DI_InterruptSwitch().DisableGlobalInterrupt();
+        }
+
+        void Unlock() override
+        {
+            DI_InterruptSwitch().EnableGlobalInterrupt();
+        }
+    };
+} // namespace
+
+base::IDictionary<std::string, bsp::IGpioPin *> const &DI_GpioPinCollection()
+{
+    Getter g;
+    return g.Instance()._dic;
 }
