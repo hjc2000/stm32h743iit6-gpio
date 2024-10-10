@@ -19,7 +19,7 @@ namespace bsp
         void Init(bsp::GpioPinOptions const &options);
 
     public:
-        static GpioPinPB1 &Instance()
+        static_function GpioPinPB1 &Instance()
         {
             class Getter :
                 public base::SingletonGetter<GpioPinPB1>

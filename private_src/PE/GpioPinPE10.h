@@ -15,7 +15,7 @@ namespace bsp
         base::Array<std::string, 1> _supported_alternate_functions{"gpio"};
 
     public:
-        static GpioPinPE10 &Instance()
+        static_function GpioPinPE10 &Instance()
         {
             class Getter :
                 public base::SingletonGetter<GpioPinPE10>

@@ -18,7 +18,7 @@ namespace bsp
         };
 
     public:
-        static GpioPinPD15 &Instance()
+        static_function GpioPinPD15 &Instance()
         {
             class Getter :
                 public base::SingletonGetter<GpioPinPD15>

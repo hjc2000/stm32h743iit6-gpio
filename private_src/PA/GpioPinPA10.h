@@ -22,7 +22,7 @@ namespace bsp
         void Init(bsp::GpioPinOptions const &options);
 
     public:
-        static GpioPinPA10 &Instance()
+        static_function GpioPinPA10 &Instance()
         {
             class Getter :
                 public base::SingletonGetter<GpioPinPA10>
