@@ -1,6 +1,5 @@
 #pragma once
-#include <array>
-#include <base/container/iterator/StdContainerEnumerable.h>
+#include <base/container/Array.h>
 #include <base/RentedPtrFactory.h>
 #include <GpioPin.h>
 #include <GpioPinOptions.h>
@@ -15,12 +14,7 @@ namespace bsp
         GpioPinPB0() = default;
 
         bool _is_open = false;
-
-        std::array<std::string, 1> _supported_alternate_functions{"gpio"};
-        base::StdContainerEnumerable<std::string, std::array<std::string, 1>>
-            _supported_alternate_functions_enumerable{
-                base::RentedPtrFactory::Create(&_supported_alternate_functions),
-            };
+        base::Array<std::string, 1> _supported_alternate_functions{"gpio"};
 
     public:
         static GpioPinPB0 &Instance()
@@ -43,7 +37,7 @@ namespace bsp
         /// @return
         base::IEnumerable<std::string> &SupportedAlternateFunctions() override
         {
-            return _supported_alternate_functions_enumerable;
+            return _supported_alternate_functions;
         }
 
         /// @brief 指示此引脚是否已经打开。

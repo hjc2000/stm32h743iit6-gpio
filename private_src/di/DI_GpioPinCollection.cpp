@@ -1,4 +1,4 @@
-#include <base/container/Collection.h>
+#include <base/container/Dictionary.h>
 #include <base/di/SingletonGetter.h>
 #include <bsp-interface/di/interrupt.h>
 #include <GpioPinOptions.h>
@@ -57,7 +57,7 @@
 #include <PH/GpioPinPH3.h>
 #pragma endregion
 
-base::ICollection<std::string, bsp::IGpioPin *> const &DI_GpioPinCollection()
+base::IDictionary<std::string, bsp::IGpioPin *> const &DI_GpioPinCollection()
 {
     class Initializer
     {
@@ -117,11 +117,11 @@ base::ICollection<std::string, bsp::IGpioPin *> const &DI_GpioPinCollection()
 
         void AddPin(bsp::IGpioPin &pin)
         {
-            _collection.Put(pin.PinName(), &pin);
+            _dic.Add(pin.PinName(), &pin);
         }
 
     public:
-        base::Collection<std::string, bsp::IGpioPin *> _collection{};
+        base::Dictionary<std::string, bsp::IGpioPin *> _dic{};
 
         static Initializer &Instance()
         {
@@ -149,5 +149,5 @@ base::ICollection<std::string, bsp::IGpioPin *> const &DI_GpioPinCollection()
         }
     };
 
-    return Initializer::Instance()._collection;
+    return Initializer::Instance()._dic;
 }
