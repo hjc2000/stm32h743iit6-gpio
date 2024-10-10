@@ -18,8 +18,28 @@ namespace bsp
     public:
         static GpioPinPG0 &Instance()
         {
-            static GpioPinPG0 o;
-            return o;
+            class Getter :
+                public base::SingletonGetter<GpioPinPG0>
+            {
+            public:
+                std::unique_ptr<GpioPinPG0> Create() override
+                {
+                    return std::unique_ptr<GpioPinPG0>{new GpioPinPG0{}};
+                }
+
+                void Lock() override
+                {
+                    DI_InterruptSwitch().DisableGlobalInterrupt();
+                }
+
+                void Unlock() override
+                {
+                    DI_InterruptSwitch().EnableGlobalInterrupt();
+                }
+            };
+
+            Getter o;
+            return o.Instance();
         }
 
         GPIO_TypeDef *Port() override;

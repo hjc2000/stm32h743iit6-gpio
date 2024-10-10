@@ -20,8 +20,28 @@ namespace bsp
     public:
         static GpioPinPD11 &Instance()
         {
-            static GpioPinPD11 o;
-            return o;
+            class Getter :
+                public base::SingletonGetter<GpioPinPD11>
+            {
+            public:
+                std::unique_ptr<GpioPinPD11> Create() override
+                {
+                    return std::unique_ptr<GpioPinPD11>{new GpioPinPD11{}};
+                }
+
+                void Lock() override
+                {
+                    DI_InterruptSwitch().DisableGlobalInterrupt();
+                }
+
+                void Unlock() override
+                {
+                    DI_InterruptSwitch().EnableGlobalInterrupt();
+                }
+            };
+
+            Getter o;
+            return o.Instance();
         }
 
         GPIO_TypeDef *Port() override;

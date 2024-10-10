@@ -16,8 +16,28 @@ namespace bsp
     public:
         static GpioPinPB5 &Instance()
         {
-            static GpioPinPB5 o;
-            return o;
+            class Getter :
+                public base::SingletonGetter<GpioPinPB5>
+            {
+            public:
+                std::unique_ptr<GpioPinPB5> Create() override
+                {
+                    return std::unique_ptr<GpioPinPB5>{new GpioPinPB5{}};
+                }
+
+                void Lock() override
+                {
+                    DI_InterruptSwitch().DisableGlobalInterrupt();
+                }
+
+                void Unlock() override
+                {
+                    DI_InterruptSwitch().EnableGlobalInterrupt();
+                }
+            };
+
+            Getter o;
+            return o.Instance();
         }
 
         GPIO_TypeDef *Port() override;
