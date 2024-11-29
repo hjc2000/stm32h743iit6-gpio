@@ -306,7 +306,7 @@ std::string bsp::GpioPinOptions::AlternateFunction() const
     return _af_mode;
 }
 
-void bsp::GpioPinOptions::SetAlternateFunction(std::string value)
+void bsp::GpioPinOptions::SetAlternateFunction(std::string const &value)
 {
     _af_mode = value;
 }

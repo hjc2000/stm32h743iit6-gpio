@@ -78,7 +78,7 @@ namespace bsp
         /// @note 假设某个单片机的一个引脚的复用功能有：uart1, timer1_compare_output 等。
         /// 这种名称是与具体型号高度相关的，所以本库无法提供一个枚举来列举这些情况。
         /// @param value
-        void SetAlternateFunction(std::string value) override;
+        void SetAlternateFunction(std::string const &value) override;
 #pragma endregion
     };
 } // namespace bsp
