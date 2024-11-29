@@ -1,23 +1,23 @@
-#include "GpioPinPC5.h"
+#include "GpioPinPC0.h"
 #include <GpioPinOptions.h>
 #include <hal.h>
 
-void bsp::GpioPinPC5::Initialize(bsp::GpioPinOptions const &options)
+void bsp::GpioPinPC0::Initialize(bsp::GpioPinOptions const &options)
 {
     GPIO_InitTypeDef init = options;
     init.Pin = Pin();
     HAL_GPIO_Init(Port(), &init);
 }
 
-bsp::GpioPinPC5 &bsp::GpioPinPC5::Instance()
+bsp::GpioPinPC0 &bsp::GpioPinPC0::Instance()
 {
     class Getter :
-        public base::SingletonGetter<GpioPinPC5>
+        public base::SingletonGetter<GpioPinPC0>
     {
     public:
-        std::unique_ptr<GpioPinPC5> Create() override
+        std::unique_ptr<GpioPinPC0> Create() override
         {
-            return std::unique_ptr<GpioPinPC5>{new GpioPinPC5{}};
+            return std::unique_ptr<GpioPinPC0>{new GpioPinPC0{}};
         }
 
         void Lock() override
@@ -35,22 +35,22 @@ bsp::GpioPinPC5 &bsp::GpioPinPC5::Instance()
     return o.Instance();
 }
 
-GPIO_TypeDef *bsp::GpioPinPC5::Port()
+GPIO_TypeDef *bsp::GpioPinPC0::Port()
 {
     return GPIOC;
 }
 
-uint32_t bsp::GpioPinPC5::Pin()
+uint32_t bsp::GpioPinPC0::Pin()
 {
-    return GPIO_PIN_5;
+    return GPIO_PIN_0;
 }
 
-std::string bsp::GpioPinPC5::PinName() const
+std::string bsp::GpioPinPC0::PinName() const
 {
-    return "PC5";
+    return "PC0";
 }
 
-void bsp::GpioPinPC5::Open(bsp::IGpioPinOptions const &options)
+void bsp::GpioPinPC0::Open(bsp::IGpioPinOptions const &options)
 {
     if (_is_open)
     {
@@ -62,7 +62,7 @@ void bsp::GpioPinPC5::Open(bsp::IGpioPinOptions const &options)
     _is_open = true;
 }
 
-void bsp::GpioPinPC5::Close()
+void bsp::GpioPinPC0::Close()
 {
     if (!_is_open)
     {

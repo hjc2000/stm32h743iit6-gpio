@@ -57,7 +57,7 @@ void bsp::GpioPinPC1::Open(bsp::IGpioPinOptions const &options)
         throw std::runtime_error{"已经打开，要先关闭"};
     }
 
-    __HAL_RCC_GPIOB_CLK_ENABLE();
+    __HAL_RCC_GPIOC_CLK_ENABLE();
     Initialize(static_cast<bsp::GpioPinOptions const &>(options));
     _is_open = true;
 }
