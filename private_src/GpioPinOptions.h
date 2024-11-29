@@ -4,6 +4,10 @@
 
 namespace bsp
 {
+    /// @brief 选项类。
+    /// @note 本类可以把 GPIO_InitTypeDef 的字段赋值为合适的值，唯独 Alternate 在
+    /// 本类中无法赋值，因为这个字段对每个引脚可以赋值的值都不一样，需要各个引脚类自己在
+    /// Open 函数中检查，然后为 GPIO_InitTypeDef 的 Alternate 字段赋值。
     class GpioPinOptions final :
         public bsp::IGpioPinOptions
     {

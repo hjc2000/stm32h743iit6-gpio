@@ -31,7 +31,7 @@ void bsp::GpioPinOptions::InitAsGpioMode(GPIO_InitTypeDef &o) const
             }
         default:
             {
-                throw std::invalid_argument{"不支持的值"};
+                throw std::invalid_argument{"不支持的 TriggerEdge"};
             }
         }
     };
@@ -52,7 +52,7 @@ void bsp::GpioPinOptions::InitAsGpioMode(GPIO_InitTypeDef &o) const
             }
         default:
             {
-                throw std::invalid_argument{"不支持的值"};
+                throw std::invalid_argument{"不支持的 Driver"};
             }
         }
     };
@@ -71,7 +71,7 @@ void bsp::GpioPinOptions::InitAsGpioMode(GPIO_InitTypeDef &o) const
         }
     default:
         {
-            throw std::invalid_argument{"不支持的值"};
+            throw std::invalid_argument{"不支持的 Direction"};
         }
     }
 }
@@ -92,7 +92,7 @@ void bsp::GpioPinOptions::InitAsAlternateFunctionMode(GPIO_InitTypeDef &o) const
         }
     default:
         {
-            throw std::invalid_argument{"不支持的值"};
+            throw std::invalid_argument{"不支持的 Driver"};
         }
     }
 }
@@ -118,7 +118,7 @@ void bsp::GpioPinOptions::InitAsEventMode(GPIO_InitTypeDef &o) const
         }
     default:
         {
-            throw std::invalid_argument{"不支持的值"};
+            throw std::invalid_argument{"不支持的 TriggerEdge"};
         }
     }
 }
@@ -157,7 +157,7 @@ bsp::GpioPinOptions::operator GPIO_InitTypeDef() const
         }
     default:
         {
-            throw std::invalid_argument{"非法工作模式"};
+            throw std::invalid_argument{"非法 WorkMode"};
         }
     }
 

@@ -2,10 +2,12 @@
 #include <base/container/Array.h>
 #include <base/RentedPtrFactory.h>
 #include <GpioPin.h>
+#include <GpioPinOptions.h>
 
 namespace bsp
 {
-    class GpioPinPC5 final : public bsp::GpioPin
+    class GpioPinPC5 final :
+        public bsp::GpioPin
     {
     private:
         GpioPinPC5() = default;
@@ -13,32 +15,10 @@ namespace bsp
         bool _is_open = false;
         base::Array<std::string, 1> _supported_alternate_functions{"gpio"};
 
+        void Initialize(bsp::GpioPinOptions const &options);
+
     public:
-        static_function GpioPinPC5 &Instance()
-        {
-            class Getter :
-                public base::SingletonGetter<GpioPinPC5>
-            {
-            public:
-                std::unique_ptr<GpioPinPC5> Create() override
-                {
-                    return std::unique_ptr<GpioPinPC5>{new GpioPinPC5{}};
-                }
-
-                void Lock() override
-                {
-                    DI_InterruptSwitch().DisableGlobalInterrupt();
-                }
-
-                void Unlock() override
-                {
-                    DI_InterruptSwitch().EnableGlobalInterrupt();
-                }
-            };
-
-            Getter o;
-            return o.Instance();
-        }
+        static_function GpioPinPC5 &Instance();
 
         GPIO_TypeDef *Port() override;
         uint32_t Pin() override;

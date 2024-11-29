@@ -1,6 +1,6 @@
 #include "GpioPinPA9.h"
 
-void bsp::GpioPinPA9::Init(bsp::GpioPinOptions const &options)
+void bsp::GpioPinPA9::Initialize(bsp::GpioPinOptions const &options)
 {
     GPIO_InitTypeDef init = options;
     if (options.WorkMode() == bsp::IGpioPinWorkMode::AlternateFunction)
@@ -41,10 +41,9 @@ void bsp::GpioPinPA9::Open(bsp::IGpioPinOptions const &options)
         throw std::runtime_error{"已经打开，要先关闭"};
     }
 
-    _is_open = true;
-
     __HAL_RCC_GPIOA_CLK_ENABLE();
-    Init(static_cast<bsp::GpioPinOptions const &>(options));
+    Initialize(static_cast<bsp::GpioPinOptions const &>(options));
+    _is_open = true;
 }
 
 void bsp::GpioPinPA9::Close()

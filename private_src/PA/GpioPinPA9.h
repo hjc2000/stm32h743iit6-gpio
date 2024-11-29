@@ -19,7 +19,7 @@ namespace bsp
             "usart1",
         };
 
-        void Init(bsp::GpioPinOptions const &options);
+        void Initialize(bsp::GpioPinOptions const &options);
 
     public:
         static_function GpioPinPA9 &Instance()
