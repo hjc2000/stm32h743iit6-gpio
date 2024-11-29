@@ -16,6 +16,11 @@
 #include <PB/GpioPinPB5.h>
 #pragma endregion
 
+#pragma region PC
+#include <PC/GpioPinPC1.h>
+#include <PC/GpioPinPC5.h>
+#pragma endregion
+
 #pragma region PD
 #include <PD/GpioPinPD0.h>
 #include <PD/GpioPinPD1.h>
@@ -80,6 +85,11 @@ namespace
             AddPin(bsp::GpioPinPB0::Instance());
             AddPin(bsp::GpioPinPB1::Instance());
             AddPin(bsp::GpioPinPB5::Instance());
+#pragma endregion
+
+#pragma region PC
+            AddPin(bsp::GpioPinPC1::Instance());
+            AddPin(bsp::GpioPinPC5::Instance());
 #pragma endregion
 
 #pragma region PD
