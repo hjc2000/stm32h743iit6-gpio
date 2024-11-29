@@ -19,6 +19,7 @@
 #pragma region PC
 #include <PC/GpioPinPC0.h>
 #include <PC/GpioPinPC1.h>
+#include <PC/GpioPinPC2.h>
 #include <PC/GpioPinPC5.h>
 #pragma endregion
 
@@ -91,6 +92,7 @@ namespace
 #pragma region PC
             AddPin(bsp::GpioPinPC0::Instance());
             AddPin(bsp::GpioPinPC1::Instance());
+            AddPin(bsp::GpioPinPC2::Instance());
             AddPin(bsp::GpioPinPC5::Instance());
 #pragma endregion
 
