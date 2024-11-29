@@ -136,6 +136,8 @@ namespace
         base::Dictionary<std::string, bsp::IGpioPin *> _dic{};
     };
 
+#pragma region Getter
+
     class Getter :
         public base::SingletonGetter<Initializer>
     {
@@ -155,6 +157,8 @@ namespace
             DI_InterruptSwitch().EnableGlobalInterrupt();
         }
     };
+
+#pragma endregion
 } // namespace
 
 base::IDictionary<std::string, bsp::IGpioPin *> const &DI_GpioPinCollection()
