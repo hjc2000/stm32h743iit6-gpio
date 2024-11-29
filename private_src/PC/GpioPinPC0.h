@@ -13,7 +13,7 @@ namespace bsp
         GpioPinPC0() = default;
 
         bool _is_open = false;
-        base::Array<std::string, 1> _supported_alternate_functions{"gpio"};
+        base::Array<std::string, 1> _supported_alternate_functions{"fmc"};
 
         void Initialize(bsp::GpioPinOptions const &options);
 
@@ -32,18 +32,11 @@ namespace bsp
         /// @note 假设某个单片机的一个引脚的复用功能有：uart1, timer1_compare_output 等。
         /// 这种名称是与具体型号高度相关的，所以本库无法提供一个枚举来列举这些情况。
         /// @return
-        base::IEnumerable<std::string> &SupportedAlternateFunctions() override
-        {
-            return _supported_alternate_functions;
-        }
+        base::IEnumerable<std::string> &SupportedAlternateFunctions() override;
 
         /// @brief 指示此引脚是否已经打开。
         /// @return
-        bool IsOpen() override
-        {
-            return _is_open;
-        }
-
+        bool IsOpen() override;
         void Open(bsp::IGpioPinOptions const &options) override;
         void Close() override;
     };

@@ -60,6 +60,16 @@ std::string bsp::GpioPinPA10::PinName() const
     return "PA10";
 }
 
+base::IEnumerable<std::string> &bsp::GpioPinPA10::SupportedAlternateFunctions()
+{
+    return _supported_alternate_functions;
+}
+
+bool bsp::GpioPinPA10::IsOpen()
+{
+    return _is_open;
+}
+
 void bsp::GpioPinPA10::Open(bsp::IGpioPinOptions const &options)
 {
     if (_is_open)

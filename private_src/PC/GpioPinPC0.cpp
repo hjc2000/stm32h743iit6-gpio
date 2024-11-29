@@ -5,6 +5,18 @@
 void bsp::GpioPinPC0::Initialize(bsp::GpioPinOptions const &options)
 {
     GPIO_InitTypeDef init = options;
+    if (options.WorkMode() == bsp::IGpioPinWorkMode::AlternateFunction)
+    {
+        if (options.AlternateFunction() == "fmc")
+        {
+            init.Alternate = GPIO_AF12_FMC;
+        }
+        else
+        {
+            throw std::invalid_argument{"不支持的 AlternateFunction"};
+        }
+    }
+
     init.Pin = Pin();
     HAL_GPIO_Init(Port(), &init);
 }
@@ -48,6 +60,16 @@ uint32_t bsp::GpioPinPC0::Pin()
 std::string bsp::GpioPinPC0::PinName() const
 {
     return "PC0";
+}
+
+base::IEnumerable<std::string> &bsp::GpioPinPC0::SupportedAlternateFunctions()
+{
+    return _supported_alternate_functions;
+}
+
+bool bsp::GpioPinPC0::IsOpen()
+{
+    return _is_open;
 }
 
 void bsp::GpioPinPC0::Open(bsp::IGpioPinOptions const &options)
