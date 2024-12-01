@@ -2,6 +2,7 @@
 #include <base/container/Array.h>
 #include <base/RentedPtrFactory.h>
 #include <GpioPin.h>
+#include <GpioPinOptions.h>
 
 namespace bsp
 {
@@ -12,34 +13,14 @@ namespace bsp
         GpioPinPE13() = default;
 
         bool _is_open = false;
-        base::Array<std::string, 1> _supported_alternate_functions{"gpio"};
+        base::Array<std::string, 1> _supported_alternate_functions{
+            "fmc",
+        };
+
+        void Initialize(bsp::GpioPinOptions const &options);
 
     public:
-        static_function GpioPinPE13 &Instance()
-        {
-            class Getter :
-                public base::SingletonGetter<GpioPinPE13>
-            {
-            public:
-                std::unique_ptr<GpioPinPE13> Create() override
-                {
-                    return std::unique_ptr<GpioPinPE13>{new GpioPinPE13{}};
-                }
-
-                void Lock() override
-                {
-                    DI_InterruptSwitch().DisableGlobalInterrupt();
-                }
-
-                void Unlock() override
-                {
-                    DI_InterruptSwitch().EnableGlobalInterrupt();
-                }
-            };
-
-            Getter o;
-            return o.Instance();
-        }
+        static_function GpioPinPE13 &Instance();
 
         GPIO_TypeDef *Port() override;
         uint32_t Pin() override;
