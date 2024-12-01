@@ -6,11 +6,11 @@
 
 namespace bsp
 {
-    class GpioPinPF1 final :
+    class GpioPinPF2 final :
         public bsp::GpioPin
     {
     private:
-        GpioPinPF1() = default;
+        GpioPinPF2() = default;
 
         bool _is_open = false;
 
@@ -21,7 +21,7 @@ namespace bsp
         void Initialize(bsp::GpioPinOptions const &options);
 
     public:
-        static_function GpioPinPF1 &Instance();
+        static_function GpioPinPF2 &Instance();
 
         GPIO_TypeDef *Port() override;
         uint32_t Pin() override;

@@ -1,8 +1,8 @@
-#include "GpioPinPF1.h"
+#include "GpioPinPF2.h"
 #include <GpioPinOptions.h>
 #include <hal.h>
 
-void bsp::GpioPinPF1::Initialize(bsp::GpioPinOptions const &options)
+void bsp::GpioPinPF2::Initialize(bsp::GpioPinOptions const &options)
 {
     GPIO_InitTypeDef init = options;
     if (options.WorkMode() == bsp::IGpioPinWorkMode::AlternateFunction)
@@ -21,15 +21,15 @@ void bsp::GpioPinPF1::Initialize(bsp::GpioPinOptions const &options)
     HAL_GPIO_Init(Port(), &init);
 }
 
-bsp::GpioPinPF1 &bsp::GpioPinPF1::Instance()
+bsp::GpioPinPF2 &bsp::GpioPinPF2::Instance()
 {
     class Getter :
-        public base::SingletonGetter<GpioPinPF1>
+        public base::SingletonGetter<GpioPinPF2>
     {
     public:
-        std::unique_ptr<GpioPinPF1> Create() override
+        std::unique_ptr<GpioPinPF2> Create() override
         {
-            return std::unique_ptr<GpioPinPF1>{new GpioPinPF1{}};
+            return std::unique_ptr<GpioPinPF2>{new GpioPinPF2{}};
         }
 
         void Lock() override
@@ -47,32 +47,32 @@ bsp::GpioPinPF1 &bsp::GpioPinPF1::Instance()
     return o.Instance();
 }
 
-GPIO_TypeDef *bsp::GpioPinPF1::Port()
+GPIO_TypeDef *bsp::GpioPinPF2::Port()
 {
     return GPIOF;
 }
 
-uint32_t bsp::GpioPinPF1::Pin()
+uint32_t bsp::GpioPinPF2::Pin()
 {
-    return GPIO_PIN_1;
+    return GPIO_PIN_2;
 }
 
-std::string bsp::GpioPinPF1::PinName() const
+std::string bsp::GpioPinPF2::PinName() const
 {
-    return "PF1";
+    return "PF2";
 }
 
-base::IEnumerable<std::string> &bsp::GpioPinPF1::SupportedAlternateFunctions()
+base::IEnumerable<std::string> &bsp::GpioPinPF2::SupportedAlternateFunctions()
 {
     return _supported_alternate_functions;
 }
 
-bool bsp::GpioPinPF1::IsOpen()
+bool bsp::GpioPinPF2::IsOpen()
 {
     return _is_open;
 }
 
-void bsp::GpioPinPF1::Open(bsp::IGpioPinOptions const &options)
+void bsp::GpioPinPF2::Open(bsp::IGpioPinOptions const &options)
 {
     if (_is_open)
     {
@@ -84,7 +84,7 @@ void bsp::GpioPinPF1::Open(bsp::IGpioPinOptions const &options)
     _is_open = true;
 }
 
-void bsp::GpioPinPF1::Close()
+void bsp::GpioPinPF2::Close()
 {
     if (!_is_open)
     {
