@@ -75,6 +75,7 @@
 #include <PG/GpioPinPG12.h>
 #include <PG/GpioPinPG2.h>
 #include <PG/GpioPinPG4.h>
+#include <PG/GpioPinPG5.h>
 #pragma endregion
 
 #pragma region PH
@@ -165,6 +166,7 @@ namespace
             AddPin(bsp::GpioPinPG1::Instance());
             AddPin(bsp::GpioPinPG2::Instance());
             AddPin(bsp::GpioPinPG4::Instance());
+            AddPin(bsp::GpioPinPG5::Instance());
             AddPin(bsp::GpioPinPG12::Instance());
 #pragma endregion
 
