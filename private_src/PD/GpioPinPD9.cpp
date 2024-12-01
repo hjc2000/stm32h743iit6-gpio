@@ -5,6 +5,18 @@
 void bsp::GpioPinPD9::Initialize(bsp::GpioPinOptions const &options)
 {
     GPIO_InitTypeDef init = options;
+    if (options.WorkMode() == bsp::IGpioPinWorkMode::AlternateFunction)
+    {
+        if (options.AlternateFunction() == "fmc")
+        {
+            init.Alternate = GPIO_AF12_FMC;
+        }
+        else
+        {
+            throw std::invalid_argument{"不支持的 AlternateFunction"};
+        }
+    }
+
     init.Pin = Pin();
     HAL_GPIO_Init(Port(), &init);
 }
