@@ -57,6 +57,7 @@
 
 #pragma region PF
 #include <PF/GpioPinPF0.h>
+#include <PF/GpioPinPF1.h>
 #pragma endregion
 
 #pragma region PG
@@ -135,6 +136,7 @@ namespace
 
 #pragma region PF
             AddPin(bsp::GpioPinPF0::Instance());
+            AddPin(bsp::GpioPinPF1::Instance());
 #pragma endregion
 
 #pragma region PG
