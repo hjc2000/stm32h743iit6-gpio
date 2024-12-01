@@ -62,6 +62,16 @@ std::string bsp::GpioPinPE12::PinName() const
     return "PE12";
 }
 
+base::IEnumerable<std::string> &bsp::GpioPinPE12::SupportedAlternateFunctions()
+{
+    return _supported_alternate_functions;
+}
+
+bool bsp::GpioPinPE12::IsOpen()
+{
+    return _is_open;
+}
+
 void bsp::GpioPinPE12::Open(bsp::IGpioPinOptions const &options)
 {
     if (_is_open)
