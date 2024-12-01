@@ -2,6 +2,7 @@
 #include <base/container/Array.h>
 #include <base/RentedPtrFactory.h>
 #include <GpioPin.h>
+#include <GpioPinOptions.h>
 
 namespace bsp
 {
@@ -12,7 +13,11 @@ namespace bsp
         GpioPinPE10() = default;
 
         bool _is_open = false;
-        base::Array<std::string, 1> _supported_alternate_functions{"gpio"};
+        base::Array<std::string, 1> _supported_alternate_functions{
+            "fmc",
+        };
+
+        void Initialize(bsp::GpioPinOptions const &options);
 
     public:
         static_function GpioPinPE10 &Instance()

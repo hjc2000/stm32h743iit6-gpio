@@ -21,6 +21,32 @@ void bsp::GpioPinPE9::Initialize(bsp::GpioPinOptions const &options)
     HAL_GPIO_Init(Port(), &init);
 }
 
+bsp::GpioPinPE9 &bsp::GpioPinPE9::Instance()
+{
+    class Getter :
+        public base::SingletonGetter<GpioPinPE9>
+    {
+    public:
+        std::unique_ptr<GpioPinPE9> Create() override
+        {
+            return std::unique_ptr<GpioPinPE9>{new GpioPinPE9{}};
+        }
+
+        void Lock() override
+        {
+            DI_InterruptSwitch().DisableGlobalInterrupt();
+        }
+
+        void Unlock() override
+        {
+            DI_InterruptSwitch().EnableGlobalInterrupt();
+        }
+    };
+
+    Getter o;
+    return o.Instance();
+}
+
 GPIO_TypeDef *bsp::GpioPinPE9::Port()
 {
     return GPIOE;
