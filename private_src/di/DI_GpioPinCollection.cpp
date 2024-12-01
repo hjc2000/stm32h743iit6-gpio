@@ -112,6 +112,9 @@ namespace
 #pragma endregion
 
 #pragma region PE
+            AddPin(bsp::GpioPinPE0::Instance());
+            AddPin(bsp::GpioPinPE1::Instance());
+            AddPin(bsp::GpioPinPE2::Instance());
             AddPin(bsp::GpioPinPE3::Instance());
             AddPin(bsp::GpioPinPE4::Instance());
             AddPin(bsp::GpioPinPE5::Instance());
