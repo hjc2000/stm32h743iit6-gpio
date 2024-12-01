@@ -62,6 +62,16 @@ std::string bsp::GpioPinPG15::PinName() const
     return "PG15";
 }
 
+base::IEnumerable<std::string> &bsp::GpioPinPG15::SupportedAlternateFunctions()
+{
+    return _supported_alternate_functions;
+}
+
+bool bsp::GpioPinPG15::IsOpen()
+{
+    return _is_open;
+}
+
 void bsp::GpioPinPG15::Open(bsp::IGpioPinOptions const &options)
 {
     if (_is_open)
