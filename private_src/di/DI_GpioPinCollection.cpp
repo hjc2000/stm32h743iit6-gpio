@@ -55,6 +55,10 @@
 #include <PE/GpioPinPE9.h>
 #pragma endregion
 
+#pragma region PF
+#include <PF/GpioPinPF0.h>
+#pragma endregion
+
 #pragma region PG
 #include <PG/GpioPinPG0.h>
 #include <PG/GpioPinPG12.h>
@@ -127,6 +131,10 @@ namespace
             AddPin(bsp::GpioPinPE13::Instance());
             AddPin(bsp::GpioPinPE14::Instance());
             AddPin(bsp::GpioPinPE15::Instance());
+#pragma endregion
+
+#pragma region PF
+            AddPin(bsp::GpioPinPF0::Instance());
 #pragma endregion
 
 #pragma region PG
