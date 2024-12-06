@@ -2,7 +2,6 @@
 #include <base/container/Array.h>
 #include <base/RentedPtrFactory.h>
 #include <GpioPin.h>
-#include <GpioPinOptions.h>
 
 namespace bsp
 {
@@ -17,8 +16,6 @@ namespace bsp
         base::Array<std::string, 1> _supported_alternate_functions{
             "fmc",
         };
-
-        void Initialize(bsp::GpioPinOptions const &options);
 
     public:
         static_function GpioPinPG8 &Instance();
@@ -47,7 +44,14 @@ namespace bsp
             return _is_open;
         }
 
-        void Open(bsp::IGpioPinOptions const &options) override;
+        /// @brief 将引脚打开为复用功能。
+        /// @param function_name 复用功能名称。
+        /// @param pull_mode 拉模式。
+        /// @param driver_mode 驱动模式。
+        void OpenAsAlternateFunctionMode(std::string function_name,
+                                         bsp::IGpioPinPullMode pull_mode,
+                                         bsp::IGpioPinDriver driver_mode) override;
+
         void Close() override;
     };
 } // namespace bsp

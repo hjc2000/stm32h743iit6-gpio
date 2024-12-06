@@ -1,24 +1,5 @@
 #include "GpioPinPB1.h"
 
-void bsp::GpioPinPB1::Init(bsp::GpioPinOptions const &options)
-{
-    GPIO_InitTypeDef init = options;
-    if (options.WorkMode() == bsp::IGpioPinWorkMode::AlternateFunction)
-    {
-        if (options.AlternateFunction() == "timer3")
-        {
-            init.Alternate = GPIO_AF2_TIM3;
-        }
-        else
-        {
-            throw std::invalid_argument{"不支持的复用模式"};
-        }
-    }
-
-    init.Pin = Pin();
-    HAL_GPIO_Init(Port(), &init);
-}
-
 GPIO_TypeDef *bsp::GpioPinPB1::Port()
 {
     return GPIOB;
@@ -34,17 +15,61 @@ std::string bsp::GpioPinPB1::PinName() const
     return "PB1";
 }
 
-void bsp::GpioPinPB1::Open(bsp::IGpioPinOptions const &options)
+void bsp::GpioPinPB1::OpenAsAlternateFunctionMode(std::string function_name, bsp::IGpioPinPullMode pull_mode, bsp::IGpioPinDriver driver_mode)
 {
-    if (_is_open)
+    EnableClock();
+    GPIO_InitTypeDef def{};
+
+    if (function_name == "timer3")
     {
-        throw std::runtime_error{"已经打开，要先关闭"};
+        def.Alternate = GPIO_AF2_TIM3;
+    }
+    else
+    {
+        throw std::invalid_argument{"不支持的复用模式"};
     }
 
-    _is_open = true;
+    switch (pull_mode)
+    {
+    default:
+    case bsp::IGpioPinPullMode::NoPull:
+        {
+            def.Pull = GPIO_NOPULL;
+            break;
+        }
+    case bsp::IGpioPinPullMode::PullUp:
+        {
+            def.Pull = GPIO_PULLUP;
+            break;
+        }
+    case bsp::IGpioPinPullMode::PullDown:
+        {
+            def.Pull = GPIO_PULLDOWN;
+            break;
+        }
+    }
 
-    __HAL_RCC_GPIOB_CLK_ENABLE();
-    Init(static_cast<bsp::GpioPinOptions const &>(options));
+    switch (driver_mode)
+    {
+    case bsp::IGpioPinDriver::PushPull:
+        {
+            def.Mode = GPIO_MODE_AF_PP;
+            break;
+        }
+    case bsp::IGpioPinDriver::OpenDrain:
+        {
+            def.Mode = GPIO_MODE_AF_PP;
+            break;
+        }
+    default:
+        {
+            throw std::invalid_argument{"不支持的 Driver"};
+        }
+    }
+
+    def.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+    def.Pin = Pin();
+    HAL_GPIO_Init(Port(), &def);
 }
 
 void bsp::GpioPinPB1::Close()

@@ -1,25 +1,5 @@
 #include "GpioPinPG4.h"
-#include <GpioPinOptions.h>
 #include <hal.h>
-
-void bsp::GpioPinPG4::Initialize(bsp::GpioPinOptions const &options)
-{
-    GPIO_InitTypeDef init = options;
-    if (options.WorkMode() == bsp::IGpioPinWorkMode::AlternateFunction)
-    {
-        if (options.AlternateFunction() == "fmc")
-        {
-            init.Alternate = GPIO_AF12_FMC;
-        }
-        else
-        {
-            throw std::invalid_argument{"不支持的 AlternateFunction"};
-        }
-    }
-
-    init.Pin = Pin();
-    HAL_GPIO_Init(Port(), &init);
-}
 
 bsp::GpioPinPG4 &bsp::GpioPinPG4::Instance()
 {
@@ -62,18 +42,6 @@ std::string bsp::GpioPinPG4::PinName() const
     return "PG4";
 }
 
-void bsp::GpioPinPG4::Open(bsp::IGpioPinOptions const &options)
-{
-    if (_is_open)
-    {
-        throw std::runtime_error{"已经打开，要先关闭"};
-    }
-
-    __HAL_RCC_GPIOG_CLK_ENABLE();
-    Initialize(static_cast<bsp::GpioPinOptions const &>(options));
-    _is_open = true;
-}
-
 void bsp::GpioPinPG4::Close()
 {
     if (!_is_open)
@@ -82,4 +50,60 @@ void bsp::GpioPinPG4::Close()
     }
 
     _is_open = false;
+}
+
+void bsp::GpioPinPG4::OpenAsAlternateFunctionMode(std::string function_name, bsp::IGpioPinPullMode pull_mode, bsp::IGpioPinDriver driver_mode)
+{
+    EnableClock();
+    GPIO_InitTypeDef def{};
+    if (function_name == "fmc")
+    {
+        def.Alternate = GPIO_AF12_FMC;
+    }
+    else
+    {
+        throw std::invalid_argument{"不支持的 AlternateFunction"};
+    }
+
+    switch (pull_mode)
+    {
+    default:
+    case bsp::IGpioPinPullMode::NoPull:
+        {
+            def.Pull = GPIO_NOPULL;
+            break;
+        }
+    case bsp::IGpioPinPullMode::PullUp:
+        {
+            def.Pull = GPIO_PULLUP;
+            break;
+        }
+    case bsp::IGpioPinPullMode::PullDown:
+        {
+            def.Pull = GPIO_PULLDOWN;
+            break;
+        }
+    }
+
+    switch (driver_mode)
+    {
+    case bsp::IGpioPinDriver::PushPull:
+        {
+            def.Mode = GPIO_MODE_AF_PP;
+            break;
+        }
+    case bsp::IGpioPinDriver::OpenDrain:
+        {
+            def.Mode = GPIO_MODE_AF_PP;
+            break;
+        }
+    default:
+        {
+            throw std::invalid_argument{"不支持的 Driver"};
+        }
+    }
+
+    def.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+    def.Pin = Pin();
+    HAL_GPIO_Init(Port(), &def);
 }

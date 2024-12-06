@@ -1,7 +1,6 @@
 #include <base/container/Dictionary.h>
 #include <base/di/SingletonGetter.h>
 #include <bsp-interface/di/interrupt.h>
-#include <GpioPinOptions.h>
 
 #pragma region PA
 #include <PA/GpioPinPA0.h>

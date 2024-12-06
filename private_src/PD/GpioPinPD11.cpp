@@ -1,5 +1,4 @@
 #include "GpioPinPD11.h"
-#include <GpioPinOptions.h>
 #include <hal.h>
 
 GPIO_TypeDef *bsp::GpioPinPD11::Port()
@@ -15,21 +14,6 @@ uint32_t bsp::GpioPinPD11::Pin()
 std::string bsp::GpioPinPD11::PinName() const
 {
     return "PD11";
-}
-
-void bsp::GpioPinPD11::Open(bsp::IGpioPinOptions const &options)
-{
-    if (_is_open)
-    {
-        throw std::runtime_error{"已经打开，要先关闭"};
-    }
-
-    _is_open = true;
-
-    __HAL_RCC_GPIOD_CLK_ENABLE();
-    GPIO_InitTypeDef init = static_cast<bsp::GpioPinOptions const &>(options);
-    init.Pin = Pin();
-    HAL_GPIO_Init(Port(), &init);
 }
 
 void bsp::GpioPinPD11::Close()

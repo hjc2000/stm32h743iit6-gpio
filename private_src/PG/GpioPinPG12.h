@@ -65,7 +65,6 @@ namespace bsp
             return _is_open;
         }
 
-        void Open(bsp::IGpioPinOptions const &options) override;
         void Close() override;
     };
 } // namespace bsp

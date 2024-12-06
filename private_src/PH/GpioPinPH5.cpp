@@ -1,5 +1,4 @@
 #include "GpioPinPH5.h"
-#include <GpioPinOptions.h>
 #include <hal.h>
 
 bsp::GpioPinPH5 &bsp::GpioPinPH5::Instance()
@@ -51,21 +50,6 @@ base::IEnumerable<std::string> &bsp::GpioPinPH5::SupportedAlternateFunctions()
 bool bsp::GpioPinPH5::IsOpen()
 {
     return _is_open;
-}
-
-void bsp::GpioPinPH5::Open(bsp::IGpioPinOptions const &options)
-{
-    if (_is_open)
-    {
-        throw std::runtime_error{"已经打开，要先关闭"};
-    }
-
-    _is_open = true;
-
-    __HAL_RCC_GPIOH_CLK_ENABLE();
-    GPIO_InitTypeDef init = static_cast<bsp::GpioPinOptions const &>(options);
-    init.Pin = Pin();
-    HAL_GPIO_Init(Port(), &init);
 }
 
 void bsp::GpioPinPH5::Close()

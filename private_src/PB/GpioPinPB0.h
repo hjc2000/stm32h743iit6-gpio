@@ -2,7 +2,6 @@
 #include <base/container/Array.h>
 #include <base/RentedPtrFactory.h>
 #include <GpioPin.h>
-#include <GpioPinOptions.h>
 #include <hal.h>
 
 namespace bsp
@@ -67,7 +66,6 @@ namespace bsp
             return _is_open;
         }
 
-        void Open(bsp::IGpioPinOptions const &options) override;
         void Close() override;
     };
 } // namespace bsp

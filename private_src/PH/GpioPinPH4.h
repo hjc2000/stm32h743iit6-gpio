@@ -37,7 +37,6 @@ namespace bsp
         /// @brief 指示此引脚是否已经打开。
         /// @return
         bool IsOpen() override;
-        void Open(bsp::IGpioPinOptions const &options) override;
         void Close() override;
     };
 } // namespace bsp
