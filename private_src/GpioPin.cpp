@@ -3,6 +3,7 @@
 
 void bsp::GpioPin::OpenAsInputMode(bsp::IGpioPinPullMode pull_mode, bsp::IGpioPinTriggerEdge trigger_edge)
 {
+    EnableClock();
     GPIO_InitTypeDef def{};
     switch (pull_mode)
     {
@@ -56,6 +57,7 @@ void bsp::GpioPin::OpenAsInputMode(bsp::IGpioPinPullMode pull_mode, bsp::IGpioPi
 
 void bsp::GpioPin::OpenAsOutputMode(bsp::IGpioPinPullMode pull_mode, bsp::IGpioPinDriver driver_mode)
 {
+    EnableClock();
     GPIO_InitTypeDef def{};
     switch (pull_mode)
     {
@@ -98,6 +100,42 @@ void bsp::GpioPin::OpenAsOutputMode(bsp::IGpioPinPullMode pull_mode, bsp::IGpioP
     def.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
     def.Pin = Pin();
     HAL_GPIO_Init(Port(), &def);
+}
+
+void bsp::GpioPin::EnableClock()
+{
+    if (Port() == GPIOA)
+    {
+        __HAL_RCC_GPIOA_CLK_ENABLE();
+    }
+    else if (Port() == GPIOB)
+    {
+        __HAL_RCC_GPIOB_CLK_ENABLE();
+    }
+    else if (Port() == GPIOC)
+    {
+        __HAL_RCC_GPIOC_CLK_ENABLE();
+    }
+    else if (Port() == GPIOD)
+    {
+        __HAL_RCC_GPIOD_CLK_ENABLE();
+    }
+    else if (Port() == GPIOE)
+    {
+        __HAL_RCC_GPIOE_CLK_ENABLE();
+    }
+    else if (Port() == GPIOF)
+    {
+        __HAL_RCC_GPIOF_CLK_ENABLE();
+    }
+    else if (Port() == GPIOG)
+    {
+        __HAL_RCC_GPIOG_CLK_ENABLE();
+    }
+    else if (Port() == GPIOH)
+    {
+        __HAL_RCC_GPIOH_CLK_ENABLE();
+    }
 }
 
 bool bsp::GpioPin::ReadPin()

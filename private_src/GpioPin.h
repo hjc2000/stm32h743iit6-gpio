@@ -24,6 +24,9 @@ namespace bsp
         /// @param driver_mode 驱动模式。
         virtual void OpenAsOutputMode(bsp::IGpioPinPullMode pull_mode, bsp::IGpioPinDriver driver_mode) override;
 
+        /// @brief 使能时钟
+        void EnableClock();
+
         bool ReadPin() override;
         void WritePin(bool value) override;
         void TogglePin() override;
