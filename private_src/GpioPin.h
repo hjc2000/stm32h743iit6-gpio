@@ -11,7 +11,15 @@ namespace bsp
         public bsp::IGpioPin
     {
     public:
-        virtual ~GpioPin() = default;
+        /// @brief 将引脚打开为输入模式。
+        /// @param pull_mode 拉模式。可以选择上拉、下拉、不拉。
+        /// @param trigger_edge 中断触发边沿。
+        virtual void OpenAsInputMode(bsp::IGpioPinPullMode pull_mode, bsp::IGpioPinTriggerEdge trigger_edge) override;
+
+        /// @brief 将引脚打开为输出模式。
+        /// @param pull_mode 拉模式。
+        /// @param driver_mode 驱动模式。
+        virtual void OpenAsOutputMode(bsp::IGpioPinPullMode pull_mode, bsp::IGpioPinDriver driver_mode);
 
         virtual GPIO_TypeDef *Port() = 0;
         virtual uint32_t Pin() = 0;

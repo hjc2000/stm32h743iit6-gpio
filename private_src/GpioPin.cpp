@@ -1,6 +1,105 @@
 #include "GpioPin.h"
 #include <bsp-interface/di/interrupt.h>
 
+void bsp::GpioPin::OpenAsInputMode(bsp::IGpioPinPullMode pull_mode, bsp::IGpioPinTriggerEdge trigger_edge)
+{
+    GPIO_InitTypeDef def{};
+    switch (pull_mode)
+    {
+    default:
+    case bsp::IGpioPinPullMode::NoPull:
+        {
+            def.Pull = GPIO_NOPULL;
+            break;
+        }
+    case bsp::IGpioPinPullMode::PullUp:
+        {
+            def.Pull = GPIO_PULLUP;
+            break;
+        }
+    case bsp::IGpioPinPullMode::PullDown:
+        {
+            def.Pull = GPIO_PULLDOWN;
+            break;
+        }
+    }
+
+    switch (trigger_edge)
+    {
+    default:
+    case bsp::IGpioPinTriggerEdge::Disable:
+        {
+            def.Mode = GPIO_MODE_INPUT;
+            break;
+        }
+    case bsp::IGpioPinTriggerEdge::RisingEdge:
+        {
+            def.Mode = GPIO_MODE_IT_RISING;
+            break;
+        }
+    case bsp::IGpioPinTriggerEdge::FallingEdge:
+        {
+            def.Mode = GPIO_MODE_IT_FALLING;
+            break;
+        }
+    case bsp::IGpioPinTriggerEdge::BothEdge:
+        {
+            def.Mode = GPIO_MODE_IT_RISING_FALLING;
+            break;
+        }
+    }
+
+    def.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+    def.Pin = Pin();
+    HAL_GPIO_Init(Port(), &def);
+}
+
+void bsp::GpioPin::OpenAsOutputMode(bsp::IGpioPinPullMode pull_mode, bsp::IGpioPinDriver driver_mode)
+{
+    GPIO_InitTypeDef def{};
+    switch (pull_mode)
+    {
+    default:
+    case bsp::IGpioPinPullMode::NoPull:
+        {
+            def.Pull = GPIO_NOPULL;
+            break;
+        }
+    case bsp::IGpioPinPullMode::PullUp:
+        {
+            def.Pull = GPIO_PULLUP;
+            break;
+        }
+    case bsp::IGpioPinPullMode::PullDown:
+        {
+            def.Pull = GPIO_PULLDOWN;
+            break;
+        }
+    }
+
+    switch (driver_mode)
+    {
+    case bsp::IGpioPinDriver::PushPull:
+        {
+            def.Mode = GPIO_MODE_OUTPUT_PP;
+            break;
+        }
+    case bsp::IGpioPinDriver::OpenDrain:
+        {
+            def.Mode = GPIO_MODE_OUTPUT_OD;
+            break;
+        }
+    default:
+        {
+            throw std::invalid_argument{"不支持的 Driver"};
+        }
+    }
+
+    def.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+    def.Pin = Pin();
+    HAL_GPIO_Init(Port(), &def);
+}
+
 bool bsp::GpioPin::ReadPin()
 {
     GPIO_PinState pin_state = HAL_GPIO_ReadPin(Port(), Pin());
