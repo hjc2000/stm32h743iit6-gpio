@@ -3,6 +3,11 @@
 
 void bsp::GpioPin::OpenAsInputMode(bsp::IGpioPinPullMode pull_mode, bsp::IGpioPinTriggerEdge trigger_edge)
 {
+    if (_is_open)
+    {
+        throw std::runtime_error{PinName() + " 已经打开"};
+    }
+
     EnableClock();
     GPIO_InitTypeDef def{};
     switch (pull_mode)
@@ -58,6 +63,11 @@ void bsp::GpioPin::OpenAsInputMode(bsp::IGpioPinPullMode pull_mode, bsp::IGpioPi
 
 void bsp::GpioPin::OpenAsOutputMode(bsp::IGpioPinPullMode pull_mode, bsp::IGpioPinDriver driver_mode)
 {
+    if (_is_open)
+    {
+        throw std::runtime_error{PinName() + " 已经打开"};
+    }
+
     EnableClock();
     GPIO_InitTypeDef def{};
     switch (pull_mode)

@@ -49,6 +49,11 @@ base::IEnumerable<std::string> &bsp::GpioPinPC3::SupportedAlternateFunctions()
 
 void bsp::GpioPinPC3::OpenAsAlternateFunctionMode(std::string function_name, bsp::IGpioPinPullMode pull_mode, bsp::IGpioPinDriver driver_mode)
 {
+    if (_is_open)
+    {
+        throw std::runtime_error{PinName() + " 已经打开"};
+    }
+
     EnableClock();
     GPIO_InitTypeDef def{};
 

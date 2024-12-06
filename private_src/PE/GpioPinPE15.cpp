@@ -44,6 +44,11 @@ std::string bsp::GpioPinPE15::PinName() const
 
 void bsp::GpioPinPE15::OpenAsAlternateFunctionMode(std::string function_name, bsp::IGpioPinPullMode pull_mode, bsp::IGpioPinDriver driver_mode)
 {
+    if (_is_open)
+    {
+        throw std::runtime_error{PinName() + " 已经打开"};
+    }
+
     EnableClock();
     GPIO_InitTypeDef def{};
     if (function_name == "fmc")
