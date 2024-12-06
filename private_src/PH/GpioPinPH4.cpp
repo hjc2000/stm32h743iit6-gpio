@@ -46,18 +46,3 @@ base::IEnumerable<std::string> &bsp::GpioPinPH4::SupportedAlternateFunctions()
 {
     return _supported_alternate_functions;
 }
-
-bool bsp::GpioPinPH4::IsOpen()
-{
-    return _is_open;
-}
-
-void bsp::GpioPinPH4::Close()
-{
-    if (!_is_open)
-    {
-        return;
-    }
-
-    _is_open = false;
-}
