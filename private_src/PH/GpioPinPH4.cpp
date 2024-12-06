@@ -14,12 +14,12 @@ bsp::GpioPinPH4 &bsp::GpioPinPH4::Instance()
 
         void Lock() override
         {
-            DI_InterruptSwitch().DisableGlobalInterrupt();
+            DI_DisableGlobalInterrupt();
         }
 
         void Unlock() override
         {
-            DI_InterruptSwitch().EnableGlobalInterrupt();
+            DI_EnableGlobalInterrupt();
         }
     };
 
