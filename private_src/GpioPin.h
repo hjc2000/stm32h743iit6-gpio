@@ -19,7 +19,7 @@ namespace bsp
         /// @brief 将引脚打开为输出模式。
         /// @param pull_mode 拉模式。
         /// @param driver_mode 驱动模式。
-        virtual void OpenAsOutputMode(bsp::IGpioPinPullMode pull_mode, bsp::IGpioPinDriver driver_mode);
+        virtual void OpenAsOutputMode(bsp::IGpioPinPullMode pull_mode, bsp::IGpioPinDriver driver_mode) override;
 
         virtual GPIO_TypeDef *Port() = 0;
         virtual uint32_t Pin() = 0;
