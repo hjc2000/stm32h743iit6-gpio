@@ -70,14 +70,5 @@ void bsp::GpioPinPE10::OpenAsAlternateFunctionMode(std::string function_name, bs
     def.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
     def.Pin = Pin();
     HAL_GPIO_Init(Port(), &def);
-}
-
-void bsp::GpioPinPE10::Close()
-{
-    if (!_is_open)
-    {
-        return;
-    }
-
-    _is_open = false;
+    _is_open = true;
 }

@@ -102,6 +102,16 @@ void bsp::GpioPin::OpenAsOutputMode(bsp::IGpioPinPullMode pull_mode, bsp::IGpioP
     HAL_GPIO_Init(Port(), &def);
 }
 
+void bsp::GpioPin::Close()
+{
+    if (!_is_open)
+    {
+        return;
+    }
+
+    _is_open = false;
+}
+
 void bsp::GpioPin::EnableClock()
 {
     if (Port() == GPIOA)

@@ -11,8 +11,6 @@ namespace bsp
     private:
         GpioPinPD0() = default;
 
-        bool _is_open = false;
-
         base::Array<std::string, 1> _supported_alternate_functions{
             "fmc",
         };
@@ -34,10 +32,6 @@ namespace bsp
         /// @return
         base::IEnumerable<std::string> &SupportedAlternateFunctions() override;
 
-        /// @brief 指示此引脚是否已经打开。
-        /// @return
-        bool IsOpen() override;
-
         /// @brief 将引脚打开为复用功能。
         /// @param function_name 复用功能名称。
         /// @param pull_mode 拉模式。
@@ -45,7 +39,5 @@ namespace bsp
         void OpenAsAlternateFunctionMode(std::string function_name,
                                          bsp::IGpioPinPullMode pull_mode,
                                          bsp::IGpioPinDriver driver_mode) override;
-
-        void Close() override;
     };
 } // namespace bsp

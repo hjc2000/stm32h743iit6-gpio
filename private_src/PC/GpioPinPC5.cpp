@@ -41,13 +41,3 @@ std::string bsp::GpioPinPC5::PinName() const
 {
     return "PC5";
 }
-
-void bsp::GpioPinPC5::Close()
-{
-    if (!_is_open)
-    {
-        return;
-    }
-
-    _is_open = false;
-}

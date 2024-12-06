@@ -15,13 +15,3 @@ std::string bsp::GpioPinPE5::PinName() const
 {
     return "PE5";
 }
-
-void bsp::GpioPinPE5::Close()
-{
-    if (!_is_open)
-    {
-        return;
-    }
-
-    _is_open = false;
-}

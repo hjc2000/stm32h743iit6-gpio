@@ -15,13 +15,3 @@ std::string bsp::GpioPinPD4::PinName() const
 {
     return "PD4";
 }
-
-void bsp::GpioPinPD4::Close()
-{
-    if (!_is_open)
-    {
-        return;
-    }
-
-    _is_open = false;
-}

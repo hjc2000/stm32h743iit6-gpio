@@ -14,13 +14,3 @@ std::string bsp::GpioPinPB0::PinName() const
 {
     return "PB0";
 }
-
-void bsp::GpioPinPB0::Close()
-{
-    if (!_is_open)
-    {
-        return;
-    }
-
-    _is_open = false;
-}

@@ -47,11 +47,6 @@ base::IEnumerable<std::string> &bsp::GpioPinPC0::SupportedAlternateFunctions()
     return _supported_alternate_functions;
 }
 
-bool bsp::GpioPinPC0::IsOpen()
-{
-    return _is_open;
-}
-
 void bsp::GpioPinPC0::OpenAsAlternateFunctionMode(std::string function_name, bsp::IGpioPinPullMode pull_mode, bsp::IGpioPinDriver driver_mode)
 {
     EnableClock();
@@ -106,14 +101,5 @@ void bsp::GpioPinPC0::OpenAsAlternateFunctionMode(std::string function_name, bsp
     def.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
     def.Pin = Pin();
     HAL_GPIO_Init(Port(), &def);
-}
-
-void bsp::GpioPinPC0::Close()
-{
-    if (!_is_open)
-    {
-        return;
-    }
-
-    _is_open = false;
+    _is_open = true;
 }
