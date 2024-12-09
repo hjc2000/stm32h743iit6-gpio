@@ -89,7 +89,7 @@ void bsp::GpioPinPG0::OpenAsAlternateFunctionMode(std::string function_name, bsp
         }
     case bsp::IGpioPinDriver::OpenDrain:
         {
-            def.Mode = GPIO_MODE_AF_PP;
+            def.Mode = GPIO_MODE_AF_OD;
             break;
         }
     default:
