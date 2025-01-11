@@ -1,25 +1,16 @@
 #include "GpioPinPC5.h"
+#include <bsp-interface/di/task.h>
 #include <hal.h>
 
 bsp::GpioPinPC5 &bsp::GpioPinPC5::Instance()
 {
     class Getter :
-        public base::SingletonGetter<GpioPinPC5>
+        public bsp::TaskSingletonGetter<GpioPinPC5>
     {
     public:
         std::unique_ptr<GpioPinPC5> Create() override
         {
             return std::unique_ptr<GpioPinPC5>{new GpioPinPC5{}};
-        }
-
-        void Lock() override
-        {
-            DI_DisableGlobalInterrupt();
-        }
-
-        void Unlock() override
-        {
-            DI_EnableGlobalInterrupt();
         }
     };
 

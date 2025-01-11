@@ -191,7 +191,7 @@ namespace
 #pragma region Getter
 
     class Getter :
-        public base::SingletonGetter<Initializer>
+        public bsp::TaskSingletonGetter<Initializer>
     {
     public:
         std::unique_ptr<Initializer> Create() override

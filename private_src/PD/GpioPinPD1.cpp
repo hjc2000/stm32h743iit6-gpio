@@ -1,25 +1,16 @@
 #include "GpioPinPD1.h"
+#include <bsp-interface/di/task.h>
 #include <hal.h>
 
 bsp::GpioPinPD1 &bsp::GpioPinPD1::Instance()
 {
     class Getter :
-        public base::SingletonGetter<GpioPinPD1>
+        public bsp::TaskSingletonGetter<GpioPinPD1>
     {
     public:
         std::unique_ptr<GpioPinPD1> Create() override
         {
             return std::unique_ptr<GpioPinPD1>{new GpioPinPD1{}};
-        }
-
-        void Lock() override
-        {
-            DI_DisableGlobalInterrupt();
-        }
-
-        void Unlock() override
-        {
-            DI_EnableGlobalInterrupt();
         }
     };
 

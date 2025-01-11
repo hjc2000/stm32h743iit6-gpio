@@ -1,6 +1,7 @@
 #pragma once
 #include <base/container/Array.h>
 #include <base/RentedPtrFactory.h>
+#include <bsp-interface/di/task.h>
 #include <GpioPin.h>
 #include <hal.h>
 
@@ -18,22 +19,12 @@ namespace bsp
         static_function GpioPinPB0 &Instance()
         {
             class Getter :
-                public base::SingletonGetter<GpioPinPB0>
+                public bsp::TaskSingletonGetter<GpioPinPB0>
             {
             public:
                 std::unique_ptr<GpioPinPB0> Create() override
                 {
                     return std::unique_ptr<GpioPinPB0>{new GpioPinPB0{}};
-                }
-
-                void Lock() override
-                {
-                    DI_DisableGlobalInterrupt();
-                }
-
-                void Unlock() override
-                {
-                    DI_EnableGlobalInterrupt();
                 }
             };
 

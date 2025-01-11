@@ -4,7 +4,7 @@
 bsp::GpioPinPE12 &bsp::GpioPinPE12::Instance()
 {
     class Getter :
-        public base::SingletonGetter<GpioPinPE12>
+        public bsp::TaskSingletonGetter<GpioPinPE12>
     {
     public:
         std::unique_ptr<GpioPinPE12> Create() override
