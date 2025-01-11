@@ -55,7 +55,7 @@ void bsp::GpioPin::OpenAsInputMode(bsp::IGpioPinPullMode pull_mode, bsp::IGpioPi
         }
     }
 
-    def.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+    def.Speed = GPIO_SPEED_FREQ_HIGH;
     def.Pin = Pin();
     HAL_GPIO_Init(Port(), &def);
     _is_open = true;
@@ -108,7 +108,7 @@ void bsp::GpioPin::OpenAsOutputMode(bsp::IGpioPinPullMode pull_mode, bsp::IGpioP
         }
     }
 
-    def.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+    def.Speed = GPIO_SPEED_FREQ_HIGH;
     def.Pin = Pin();
     HAL_GPIO_Init(Port(), &def);
     _is_open = true;
