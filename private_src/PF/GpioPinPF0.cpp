@@ -1,4 +1,5 @@
 #include "GpioPinPF0.h"
+#include <bsp-interface/di/task.h>
 #include <hal.h>
 
 bsp::GpioPinPF0 &bsp::GpioPinPF0::Instance()
@@ -10,16 +11,6 @@ bsp::GpioPinPF0 &bsp::GpioPinPF0::Instance()
         std::unique_ptr<GpioPinPF0> Create() override
         {
             return std::unique_ptr<GpioPinPF0>{new GpioPinPF0{}};
-        }
-
-        void Lock() override
-        {
-            DI_DisableGlobalInterrupt();
-        }
-
-        void Unlock() override
-        {
-            DI_EnableGlobalInterrupt();
         }
     };
 
