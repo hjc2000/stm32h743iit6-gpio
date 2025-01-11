@@ -1,6 +1,7 @@
 #include <base/container/Dictionary.h>
 #include <base/di/SingletonGetter.h>
 #include <bsp-interface/di/interrupt.h>
+#include <bsp-interface/di/task.h>
 
 #pragma region PA
 #include <PA/GpioPinPA0.h>
@@ -197,16 +198,6 @@ namespace
         std::unique_ptr<Initializer> Create() override
         {
             return std::unique_ptr<Initializer>{new Initializer{}};
-        }
-
-        void Lock() override
-        {
-            DI_DisableGlobalInterrupt();
-        }
-
-        void Unlock() override
-        {
-            DI_EnableGlobalInterrupt();
         }
     };
 
