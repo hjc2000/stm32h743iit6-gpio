@@ -1,16 +1,25 @@
 #include "GpioPinPF4.h"
-#include <bsp-interface/di/task.h>
 #include <hal.h>
 
 bsp::GpioPinPF4 &bsp::GpioPinPF4::Instance()
 {
     class Getter :
-        public bsp::TaskSingletonGetter<GpioPinPF4>
+        public base::SingletonGetter<GpioPinPF4>
     {
     public:
         std::unique_ptr<GpioPinPF4> Create() override
         {
             return std::unique_ptr<GpioPinPF4>{new GpioPinPF4{}};
+        }
+
+        void Lock() override
+        {
+            DI_DisableGlobalInterrupt();
+        }
+
+        void Unlock() override
+        {
+            DI_EnableGlobalInterrupt();
         }
     };
 

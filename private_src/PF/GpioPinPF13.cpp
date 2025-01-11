@@ -1,16 +1,25 @@
 #include "GpioPinPF13.h"
-#include <bsp-interface/di/task.h>
 #include <hal.h>
 
 bsp::GpioPinPF13 &bsp::GpioPinPF13::Instance()
 {
     class Getter :
-        public bsp::TaskSingletonGetter<GpioPinPF13>
+        public base::SingletonGetter<GpioPinPF13>
     {
     public:
         std::unique_ptr<GpioPinPF13> Create() override
         {
             return std::unique_ptr<GpioPinPF13>{new GpioPinPF13{}};
+        }
+
+        void Lock() override
+        {
+            DI_DisableGlobalInterrupt();
+        }
+
+        void Unlock() override
+        {
+            DI_EnableGlobalInterrupt();
         }
     };
 
