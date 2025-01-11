@@ -1,6 +1,7 @@
 #pragma once
 #include <base/container/Array.h>
 #include <base/RentedPtrFactory.h>
+#include <bsp-interface/di/task.h>
 #include <GpioPin.h>
 
 namespace bsp
@@ -25,16 +26,6 @@ namespace bsp
                 std::unique_ptr<GpioPinPE10> Create() override
                 {
                     return std::unique_ptr<GpioPinPE10>{new GpioPinPE10{}};
-                }
-
-                void Lock() override
-                {
-                    DI_DisableGlobalInterrupt();
-                }
-
-                void Unlock() override
-                {
-                    DI_EnableGlobalInterrupt();
                 }
             };
 
