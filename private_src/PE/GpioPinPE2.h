@@ -24,16 +24,6 @@ namespace bsp
                 {
                     return std::unique_ptr<GpioPinPE2>{new GpioPinPE2{}};
                 }
-
-                void Lock() override
-                {
-                    DI_DisableGlobalInterrupt();
-                }
-
-                void Unlock() override
-                {
-                    DI_EnableGlobalInterrupt();
-                }
             };
 
             Getter o;

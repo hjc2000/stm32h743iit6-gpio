@@ -11,16 +11,6 @@ bsp::GpioPinPE9 &bsp::GpioPinPE9::Instance()
         {
             return std::unique_ptr<GpioPinPE9>{new GpioPinPE9{}};
         }
-
-        void Lock() override
-        {
-            DI_DisableGlobalInterrupt();
-        }
-
-        void Unlock() override
-        {
-            DI_EnableGlobalInterrupt();
-        }
     };
 
     Getter o;

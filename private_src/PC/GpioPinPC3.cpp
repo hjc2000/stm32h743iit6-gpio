@@ -11,16 +11,6 @@ bsp::GpioPinPC3 &bsp::GpioPinPC3::Instance()
         {
             return std::unique_ptr<GpioPinPC3>{new GpioPinPC3{}};
         }
-
-        void Lock() override
-        {
-            DI_DisableGlobalInterrupt();
-        }
-
-        void Unlock() override
-        {
-            DI_EnableGlobalInterrupt();
-        }
     };
 
     Getter o;

@@ -11,16 +11,6 @@ bsp::GpioPinPH4 &bsp::GpioPinPH4::Instance()
         {
             return std::unique_ptr<GpioPinPH4>{new GpioPinPH4{}};
         }
-
-        void Lock() override
-        {
-            DI_DisableGlobalInterrupt();
-        }
-
-        void Unlock() override
-        {
-            DI_EnableGlobalInterrupt();
-        }
     };
 
     Getter o;
