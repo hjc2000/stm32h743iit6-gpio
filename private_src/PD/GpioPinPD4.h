@@ -19,7 +19,7 @@ namespace bsp
         static_function GpioPinPD4 &Instance()
         {
             class Getter :
-                public base::SingletonGetter<GpioPinPD4>
+                public bsp::TaskSingletonGetter<GpioPinPD4>
             {
             public:
                 std::unique_ptr<GpioPinPD4> Create() override
