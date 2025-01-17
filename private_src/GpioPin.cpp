@@ -188,82 +188,82 @@ void bsp::GpioPin::RegisterInterruptCallback(std::function<void()> callback)
     {
     case GPIO_PIN_0:
         {
-            DI_ExtiManager().Register(0, callback);
+            bsp::di::interrupt::ExtiManager().Register(0, callback);
             break;
         }
     case GPIO_PIN_1:
         {
-            DI_ExtiManager().Register(1, callback);
+            bsp::di::interrupt::ExtiManager().Register(1, callback);
             break;
         }
     case GPIO_PIN_2:
         {
-            DI_ExtiManager().Register(2, callback);
+            bsp::di::interrupt::ExtiManager().Register(2, callback);
             break;
         }
     case GPIO_PIN_3:
         {
-            DI_ExtiManager().Register(3, callback);
+            bsp::di::interrupt::ExtiManager().Register(3, callback);
             break;
         }
     case GPIO_PIN_4:
         {
-            DI_ExtiManager().Register(4, callback);
+            bsp::di::interrupt::ExtiManager().Register(4, callback);
             break;
         }
     case GPIO_PIN_5:
         {
-            DI_ExtiManager().Register(5, callback);
+            bsp::di::interrupt::ExtiManager().Register(5, callback);
             break;
         }
     case GPIO_PIN_6:
         {
-            DI_ExtiManager().Register(6, callback);
+            bsp::di::interrupt::ExtiManager().Register(6, callback);
             break;
         }
     case GPIO_PIN_7:
         {
-            DI_ExtiManager().Register(7, callback);
+            bsp::di::interrupt::ExtiManager().Register(7, callback);
             break;
         }
     case GPIO_PIN_8:
         {
-            DI_ExtiManager().Register(8, callback);
+            bsp::di::interrupt::ExtiManager().Register(8, callback);
             break;
         }
     case GPIO_PIN_9:
         {
-            DI_ExtiManager().Register(9, callback);
+            bsp::di::interrupt::ExtiManager().Register(9, callback);
             break;
         }
     case GPIO_PIN_10:
         {
-            DI_ExtiManager().Register(10, callback);
+            bsp::di::interrupt::ExtiManager().Register(10, callback);
             break;
         }
     case GPIO_PIN_11:
         {
-            DI_ExtiManager().Register(11, callback);
+            bsp::di::interrupt::ExtiManager().Register(11, callback);
             break;
         }
     case GPIO_PIN_12:
         {
-            DI_ExtiManager().Register(12, callback);
+            bsp::di::interrupt::ExtiManager().Register(12, callback);
             break;
         }
     case GPIO_PIN_13:
         {
-            DI_ExtiManager().Register(13, callback);
+            bsp::di::interrupt::ExtiManager().Register(13, callback);
             break;
         }
     case GPIO_PIN_14:
         {
-            DI_ExtiManager().Register(14, callback);
+            bsp::di::interrupt::ExtiManager().Register(14, callback);
             break;
         }
     case GPIO_PIN_15:
         {
-            DI_ExtiManager().Register(15, callback);
+            bsp::di::interrupt::ExtiManager().Register(15, callback);
             break;
         }
     default:
@@ -279,82 +279,82 @@ void bsp::GpioPin::UnregisterInterruptCallback()
     {
     case GPIO_PIN_0:
         {
-            DI_ExtiManager().Unregister(0);
+            bsp::di::interrupt::ExtiManager().Unregister(0);
             break;
         }
     case GPIO_PIN_1:
         {
-            DI_ExtiManager().Unregister(1);
+            bsp::di::interrupt::ExtiManager().Unregister(1);
             break;
         }
     case GPIO_PIN_2:
         {
-            DI_ExtiManager().Unregister(2);
+            bsp::di::interrupt::ExtiManager().Unregister(2);
             break;
         }
     case GPIO_PIN_3:
         {
-            DI_ExtiManager().Unregister(3);
+            bsp::di::interrupt::ExtiManager().Unregister(3);
             break;
         }
     case GPIO_PIN_4:
         {
-            DI_ExtiManager().Unregister(4);
+            bsp::di::interrupt::ExtiManager().Unregister(4);
             break;
         }
     case GPIO_PIN_5:
         {
-            DI_ExtiManager().Unregister(5);
+            bsp::di::interrupt::ExtiManager().Unregister(5);
             break;
         }
     case GPIO_PIN_6:
         {
-            DI_ExtiManager().Unregister(6);
+            bsp::di::interrupt::ExtiManager().Unregister(6);
             break;
         }
     case GPIO_PIN_7:
         {
-            DI_ExtiManager().Unregister(7);
+            bsp::di::interrupt::ExtiManager().Unregister(7);
             break;
         }
     case GPIO_PIN_8:
         {
-            DI_ExtiManager().Unregister(8);
+            bsp::di::interrupt::ExtiManager().Unregister(8);
             break;
         }
     case GPIO_PIN_9:
         {
-            DI_ExtiManager().Unregister(9);
+            bsp::di::interrupt::ExtiManager().Unregister(9);
             break;
         }
     case GPIO_PIN_10:
         {
-            DI_ExtiManager().Unregister(10);
+            bsp::di::interrupt::ExtiManager().Unregister(10);
             break;
         }
     case GPIO_PIN_11:
         {
-            DI_ExtiManager().Unregister(11);
+            bsp::di::interrupt::ExtiManager().Unregister(11);
             break;
         }
     case GPIO_PIN_12:
         {
-            DI_ExtiManager().Unregister(12);
+            bsp::di::interrupt::ExtiManager().Unregister(12);
             break;
         }
     case GPIO_PIN_13:
         {
-            DI_ExtiManager().Unregister(13);
+            bsp::di::interrupt::ExtiManager().Unregister(13);
             break;
         }
     case GPIO_PIN_14:
         {
-            DI_ExtiManager().Unregister(14);
+            bsp::di::interrupt::ExtiManager().Unregister(14);
             break;
         }
     case GPIO_PIN_15:
         {
-            DI_ExtiManager().Unregister(15);
+            bsp::di::interrupt::ExtiManager().Unregister(15);
             break;
         }
     default:
